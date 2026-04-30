@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { format, subDays } from "date-fns";
-import type { DashboardFilters } from "@/types";
+import type { DashboardFilters, PerformanceInsight } from "@/types";
 import { CLIENTS, CAMPAIGNS, SENDER_EMAILS } from "@/data/clients";
 import { getMockEvents } from "@/data/mockEmailEvents";
 import { computeDashboardData } from "@/lib/metrics";
@@ -38,6 +38,8 @@ export function Dashboard() {
 
   const [filters, setFilters] = useState<DashboardFilters>(defaultFilters);
   const [isLoading, setIsLoading] = useState(true);
+  const [aiInsights, setAiInsights] = useState<PerformanceInsight[] | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
 
   const allEvents = useMemo(() => getMockEvents(), []);
 
@@ -45,9 +47,35 @@ export function Dashboard() {
 
   const client = CLIENTS.find((c) => c.id === filters.clientId) ?? CLIENTS[0];
 
+  const fetchAiInsights = useCallback(async () => {
+    setAiLoading(true);
+    try {
+      const res = await fetch("/api/ai-insights", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          kpis: data.kpis,
+          campaigns: data.campaignMetrics,
+          senders: data.senderMetrics,
+          variants: data.variantMetrics,
+          dateRange: filters.dateRange,
+        }),
+      });
+      if (res.ok) {
+        const json = await res.json() as { insights: PerformanceInsight[] };
+        setAiInsights(json.insights ?? null);
+      }
+    } catch {
+      // AI insights are non-critical; fall back to static insights
+    } finally {
+      setAiLoading(false);
+    }
+  }, [data, filters.dateRange]);
+
   // Simulate a brief load on filter change for UX
   useEffect(() => {
     setIsLoading(true);
+    setAiInsights(null);
     const t = setTimeout(() => setIsLoading(false), 150);
     return () => clearTimeout(t);
   }, [filters]);
@@ -76,7 +104,12 @@ export function Dashboard() {
             />
 
             {/* Performance Insights */}
-            <InsightsSection insights={data.insights} />
+            <InsightsSection
+              insights={aiInsights ?? data.insights}
+              isAi={aiInsights !== null}
+              isLoading={aiLoading}
+              onRefresh={fetchAiInsights}
+            />
 
             {/* KPIs */}
             <section>
