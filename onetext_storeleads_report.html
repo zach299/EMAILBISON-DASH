@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>OneText — StoreLeads Outbound Analysis</title>
+<style>
+  :root {
+    --navy: #0A0F1E;
+    --navy2: #111827;
+    --navy3: #1a2235;
+    --green: #00E87A;
+    --green-dim: rgba(0,232,122,0.15);
+    --green-border: rgba(0,232,122,0.4);
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: rgba(255,255,255,0.07);
+    --card-bg: #111827;
+    --row-hover: rgba(0,232,122,0.05);
+    --radius: 10px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #0A0F1E 0%, #0d1529 100%); border-bottom: 1px solid var(--border); padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-mark { width: 40px; height: 40px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .logo-mark svg { width: 24px; height: 24px; }
+  .logo-text { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+  .logo-text span { color: var(--green); }
+  .header-meta { text-align: right; }
+  .header-meta h1 { font-size: 18px; font-weight: 600; color: #fff; }
+  .header-meta p { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+
+  .container { max-width: 1600px; margin: 0 auto; padding: 32px 40px; }
+
+  /* KPI CARDS */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 36px; }
+  .kpi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; position: relative; overflow: hidden; }
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--green), transparent); }
+  .kpi-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 8px; }
+  .kpi-value { font-size: 28px; font-weight: 700; color: #fff; line-height: 1; }
+  .kpi-value.green { color: var(--green); }
+  .kpi-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+
+  /* TOOLBAR */
+  .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+  .toolbar-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .section-title { font-size: 20px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .badge { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-border); border-radius: 20px; font-size: 12px; font-weight: 600; padding: 2px 10px; }
+  .sort-btn { background: var(--navy3); border: 1px solid var(--border); color: var(--text-muted); font-size: 13px; padding: 7px 14px; border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+  .sort-btn:hover, .sort-btn.active { background: var(--green-dim); color: var(--green); border-color: var(--green-border); }
+  .download-btn { background: var(--green); color: #0A0F1E; font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 6px; cursor: pointer; border: none; letter-spacing: 0.03em; transition: opacity 0.15s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+  .download-btn:hover { opacity: 0.88; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: #0d1529; position: sticky; top: 0; z-index: 2; }
+  th { padding: 13px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); font-weight: 600; cursor: pointer; white-space: nowrap; border-bottom: 1px solid var(--border); user-select: none; }
+  th:hover { color: var(--green); }
+  th .sort-icon { margin-left: 4px; opacity: 0.4; }
+  th.sorted-asc .sort-icon::after { content: ' ↑'; opacity: 1; color: var(--green); }
+  th.sorted-desc .sort-icon::after { content: ' ↓'; opacity: 1; color: var(--green); }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); white-space: nowrap; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--row-hover); }
+  tbody tr { transition: background 0.1s; }
+  tr.top-row td:first-child { border-left: 3px solid var(--green); }
+  tr.not-found-row { opacity: 0.55; }
+  .store-name { font-weight: 600; color: #fff; }
+  .domain-link { color: var(--green); text-decoration: none; }
+  .domain-link:hover { text-decoration: underline; }
+  .email-link { color: var(--text-muted); text-decoration: none; font-size: 12px; }
+  .email-link:hover { color: var(--text); }
+  .date-cell { color: var(--text-muted); font-size: 12px; }
+  .num-cell { font-variant-numeric: tabular-nums; text-align: right; }
+  .na { color: #4b5563; font-style: italic; }
+  .platform-badge { background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 500; }
+  .platform-badge.shopify { background: rgba(150,191,76,0.15); border-color: rgba(150,191,76,0.35); color: #96bf4c; }
+  .score { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-weight: 700; font-size: 13px; }
+  .score-high { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-border); }
+  .score-mid { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+  .score-low { background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border); }
+
+  /* NOT FOUND */
+  .not-found-section { margin-top: 40px; }
+  .not-found-desc { color: var(--text-muted); font-size: 14px; margin: 12px 0 20px; }
+  .not-found-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .not-found-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; opacity: 0.7; }
+  .nf-domain { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .nf-company { font-size: 13px; color: var(--text-muted); }
+  .nf-contact { font-size: 11px; color: #4b5563; margin-top: 6px; }
+
+  /* FOOTER */
+  .footer { text-align: center; padding: 32px 40px; color: #374151; font-size: 12px; border-top: 1px solid var(--border); margin-top: 48px; }
+  .legend { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#0A0F1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="logo-text">One<span>Text</span></div>
+  </div>
+  <div class="header-meta">
+    <h1>StoreLeads Outbound Analysis</h1>
+    <p>Generated May 18, 2026 at 5:22 PM UTC</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Total Demos</div>
+      <div class="kpi-value green">26</div>
+      <div class="kpi-sub">Contacts in pipeline</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Stores Found</div>
+      <div class="kpi-value green">0</div>
+      <div class="kpi-sub">26 not in StoreLeads</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg Est. Revenue</div>
+      <div class="kpi-value">$0</div>
+      <div class="kpi-sub">Annual revenue estimate</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg Monthly Traffic</div>
+      <div class="kpi-value">0</div>
+      <div class="kpi-sub">Monthly visitors</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avg Product Price</div>
+      <div class="kpi-value">—</div>
+      <div class="kpi-sub">Average order value proxy</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Top Category</div>
+      <div class="kpi-value" style="font-size:18px;line-height:1.3">—</div>
+      <div class="kpi-sub">Most common vertical</div>
+    </div>
+  </div>
+
+  <!-- TABLE SECTION -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <h2 class="section-title">Demo Pipeline <span class="badge">26 contacts</span></h2>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--green);border-left:3px solid var(--green)"></div> Top 25% by score</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#374151"></div> Not found in StoreLeads</div>
+      </div>
+    </div>
+    <a id="csv-download" class="download-btn" href="data:text/csv;base64,U3RvcmUgTmFtZSxEb21haW4sQ29udGFjdCxFbWFpbCxEZW1vIERhdGUsUGxhdGZvcm0sRXN0IFJldmVudWUsTW9udGhseSBUcmFmZmljLEF2ZyBQcmljZSxDYXRlZ29yeSxDb3VudHJ5LFNjb3JlCk5hdGl2ZVBhdGgsbmF0aXZlcGF0aC5jb20sQ2hpcXVpdGEgSm9obnNvbixjaGlxdWl0YS5qb2huc29uQG5hdGl2ZXBhdGguY29tLDIwMjYtMDQtMTcs4oCULCwsLOKAlCzigJQsMApQaW5hcSBMaXF1ZXVyLHBpbmFxLmNvbSxUb20gQ3VydGluLHRvbS5jdXJ0aW5AcGluYXEuY29tLDIwMjYtMDQtMTcs4oCULCwsLOKAlCzigJQsMApIYXBweSBMdWNreSdzIFRlYWhvdXNlLGhhcHB5bHVja3lzLmNvbSxHZW9yZ2UgR3Jvc3NtYW4sZ2VvcmdlQGhhcHB5bHVja3lzLmNvbSwyMDI2LTA0LTIwLOKAlCwsLCzigJQs4oCULDAKRGF3YnUsZGF3YnUuY29tLEthcnRpayxrYXJ0aWtAdGhlYWZmb3JkYWJsZW9yZ2FuaWNzdG9yZS5jb20sMjAyNi0wNC0yMCzigJQsLCws4oCULOKAlCwwClVtYmVydG8gR2lhbm5pbmksdW1iZXJ0b2dpYW5uaW5pLmNvbSxLYXRlIEIsZWNvbW1lcmNlQHVtYmVydG9naWFubmluaS5jby51aywyMDI2LTA0LTIxLOKAlCwsLCzigJQs4oCULDAKU2hhcGV3ZWFydXNhLmNvbSxzaGFwZXdlYXJ1c2EuY29tLFN0ZXZlIEpvbmVzLHNqb25lc0BzaGFwZXdlYXJ1c2EuY29tLDIwMjYtMDQtMjEs4oCULCwsLOKAlCzigJQsMApMb3N0IER1dGNobWFuIExlYXRoZXIsbG9zdGR1dGNobWFubGVhdGhlci5jb20sT2xpdmlhLG9saXZpYUBsb3N0ZHV0Y2htYW5sZWF0aGVyLmNvbSwyMDI2LTA0LTIxLOKAlCwsLCzigJQs4oCULDAKUGV0c3RhYmxlLHBldHN0YWJsZS5teCxMdWlzIEdlcmFyZG8gRmxvcmVzLGx1aXNnZXJhcmRvQHBldHN0YWJsZS5teCwyMDI2LTA0LTIxLOKAlCwsLCzigJQs4oCULDAKUGF0Qk8scGF0Ym8uY29tLEVyaWNhIFN3YWxmLGVyaWNhLnN3YWxmQHBhdGJvLmNvbSwyMDI2LTA0LTIyLOKAlCwsLCzigJQs4oCULDAKQ3JhZnRtaXgsY3JhZnRtaXguY29tLEx5bm5zZXkgQmFrZXIsbHlubnNleUBjcmFmdG1peC5jb20sMjAyNi0wNC0yNCzigJQsLCws4oCULOKAlCwwCk5DIENob2NvbGF0aWVyLG5jY2hvY29sYXRpZXIuY29tLFphbG1hbiBUZWxkb24semFsbWFuQG5jY2hvY29sYXRpZXIuY29tLDIwMjYtMDQtMjcs4oCULCwsLOKAlCzigJQsMApGcmVlc3R5bGUgU25hY2tzLGZyZWVzdHlsZXNuYWNraW5nLmNvbSxIYW5uYWggSmFibG9uc2tpLGhhbm5haEBmcmVlc3R5bGVzbmFja2luZy5jb20sMjAyNi0wNC0yNyzigJQsLCws4oCULOKAlCwwCkRSLUhPJ1MsZHJob25vdy5jb20sVmluY2VudCBIbyx2aG9AZHJob25vdy5jb20sMjAyNi0wNC0yOCzigJQsLCws4oCULOKAlCwwClVyYmFuIFBsYXR0ZXIsdXJiYW5wbGF0dGVyLmNvbSxZYXNoIERhbmkseWFzaEBnbGFtYmxlLmNvbSwyMDI2LTA0LTI5LOKAlCwsLCzigJQs4oCULDAKRXZhbiBBbGV4YW5kZXIgR3Jvb21pbmcsZXZhbmFsZXhhbmRlcmdyb29taW5nLmNvbSxCcmFuZG9uIFBhdHRvbixicmFuZG9uQGV2YW5hbGV4YW5kZXJncm9vbWluZy5jb20sMjAyNi0wNC0yOSzigJQsLCws4oCULOKAlCwwClNhcmFoIENyZWFsIEJlYXV0eSxzYXJhaGNyZWFsYmVhdXR5LmNvbSxUaW4sdGluQHNhcmFoY3JlYWxiZWF1dHkuY29tLDIwMjYtMDQtMjks4oCULCwsLOKAlCzigJQsMApFY2hvLVNpZ21hLGVjaG8tc2lnbWEuY29tLENocmlzIFJlaWRlbCxjaHJpc0BlY2hvLXNpZ21hLmNvbSwyMDI2LTA0LTMwLOKAlCwsLCzigJQs4oCULDAKSWxsdW1pbmF0ZSBMYWJzLGlsbHVtaW5hdGVsYWJzLm9yZyxDYWxsb3dheSBDb29rLGNhbGxvd2F5QGlsbHVtaW5hdGVsYWJzLm9yZywyMDI2LTA1LTA1LOKAlCwsLCzigJQs4oCULDAKVXJiYW5zcGFjZSx1cmJhbnNwYWNlbWFya2V0cy5jb20sRWxkb24gU2NvdHQsZXNjb3R0QHVyYmFuc3BhY2VtYXJrZXRzLmNvbSwyMDI2LTA1LTA2LOKAlCwsLCzigJQs4oCULDAKSW1wZXJpYSBDYXZpYXIsaW1wZXJpYWNhdmlhci5jb20sRGFuaWVsIExlZSxkYW5pZWxAaW1wZXJpYWNhdmlhci5jb20sMjAyNi0wNS0wOCzigJQsLCws4oCULOKAlCwwClJpZ2h0IEhvb2sgRGlnaXRhbCxyaWdodGhvb2tkaWdpdGFsLmNvbSxBbmRyZXcgTGF1Y2huZXIsZHJld0ByaWdodGhvb2tkaWdpdGFsLmNvbSwyMDI2LTA1LTExLOKAlCwsLCzigJQs4oCULDAKUGluZXJpZGdlIEhvbGxvdyxwaW5lcmlkZ2Vob2xsb3cuY29tLFphY2ggUmVnZWhyLHphY2hAcGluZWlyZGdlaG9sbG93LmNvbSwyMDI2LTA1LTEzLOKAlCwsLCzigJQs4oCULDAKQ29uY3JldGUgVG9vbHMgRGlyZWN0LGNvbmNyZXRldG9vbHNkaXJlY3QuY29tLEthbWlsYSxrYW1pbGFAY29uY3JldGV0b29sc2RpcmVjdC5jb20sMjAyNi0wNS0xOCzigJQsLCws4oCULOKAlCwwClB1cml0aW9uLHB1cml0aW9uLmNvLnVrLE1hdHQsbWF0dGhld0BwdXJpdGlvbi5jby51aywyMDI2LTA1LTE5LOKAlCwsLCzigJQs4oCULDAKTWlhbWlseSxtaWFtaWx5LmNvbSxGcmFuY2VzY28gRmFicmlzLGZyYW5jZXNjb0BtaWFtaWx5LmNvbSwyMDI2LTA1LTIwLOKAlCwsLCzigJQs4oCULDAKU3ltcGhvbnkgTmF0dXJhbCBIZWFsdGgsc3ltcGhvbnluYXR1cmFsaGVhbHRoLmNvbSxDaGVsc2V5IEdyYXksY2hlbHNleS5ncmF5QHN5bXBob255bmF0dXJhbGhlYWx0aC5jb20sMjAyNi0wNi0xNSzigJQsLCws4oCULOKAlCww" download="onetext_storeleads_2026-05-18.csv">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download CSV
+    </a>
+  </div>
+
+  <div class="table-wrap">
+    <table id="main-table">
+      <thead>
+        <tr>
+          <th data-col="storeName">Store Name<span class="sort-icon"></span></th>
+          <th data-col="domain">Domain<span class="sort-icon"></span></th>
+          <th data-col="contactName">Contact<span class="sort-icon"></span></th>
+          <th data-col="email">Email<span class="sort-icon"></span></th>
+          <th data-col="demoDate">Demo Date<span class="sort-icon"></span></th>
+          <th data-col="platform">Platform<span class="sort-icon"></span></th>
+          <th data-col="revenue" class="num-cell">Est. Revenue<span class="sort-icon"></span></th>
+          <th data-col="traffic" class="num-cell">Monthly Traffic<span class="sort-icon"></span></th>
+          <th data-col="avgPrice" class="num-cell">Avg Price<span class="sort-icon"></span></th>
+          <th data-col="category">Category<span class="sort-icon"></span></th>
+          <th data-col="country">Country<span class="sort-icon"></span></th>
+          <th data-col="score" class="num-cell">Score<span class="sort-icon"></span></th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-17" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">NativePath</span></td>
+      <td><a href="https://nativepath.com" target="_blank" rel="noopener" class="domain-link">nativepath.com</a></td>
+      <td>Chiquita Johnson</td>
+      <td><a href="mailto:chiquita.johnson@nativepath.com" class="email-link">chiquita.johnson@nativepath.com</a></td>
+      <td class="date-cell">2026-04-17</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-17" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Pinaq Liqueur</span></td>
+      <td><a href="https://pinaq.com" target="_blank" rel="noopener" class="domain-link">pinaq.com</a></td>
+      <td>Tom Curtin</td>
+      <td><a href="mailto:tom.curtin@pinaq.com" class="email-link">tom.curtin@pinaq.com</a></td>
+      <td class="date-cell">2026-04-17</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-20" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Happy Lucky's Teahouse</span></td>
+      <td><a href="https://happyluckys.com" target="_blank" rel="noopener" class="domain-link">happyluckys.com</a></td>
+      <td>George Grossman</td>
+      <td><a href="mailto:george@happyluckys.com" class="email-link">george@happyluckys.com</a></td>
+      <td class="date-cell">2026-04-20</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-20" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Dawbu</span></td>
+      <td><a href="https://dawbu.com" target="_blank" rel="noopener" class="domain-link">dawbu.com</a></td>
+      <td>Kartik</td>
+      <td><a href="mailto:kartik@theaffordableorganicstore.com" class="email-link">kartik@theaffordableorganicstore.com</a></td>
+      <td class="date-cell">2026-04-20</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-21" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Umberto Giannini</span></td>
+      <td><a href="https://umbertogiannini.com" target="_blank" rel="noopener" class="domain-link">umbertogiannini.com</a></td>
+      <td>Kate B</td>
+      <td><a href="mailto:ecommerce@umbertogiannini.co.uk" class="email-link">ecommerce@umbertogiannini.co.uk</a></td>
+      <td class="date-cell">2026-04-21</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-21" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Shapewearusa.com</span></td>
+      <td><a href="https://shapewearusa.com" target="_blank" rel="noopener" class="domain-link">shapewearusa.com</a></td>
+      <td>Steve Jones</td>
+      <td><a href="mailto:sjones@shapewearusa.com" class="email-link">sjones@shapewearusa.com</a></td>
+      <td class="date-cell">2026-04-21</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-21" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Lost Dutchman Leather</span></td>
+      <td><a href="https://lostdutchmanleather.com" target="_blank" rel="noopener" class="domain-link">lostdutchmanleather.com</a></td>
+      <td>Olivia</td>
+      <td><a href="mailto:olivia@lostdutchmanleather.com" class="email-link">olivia@lostdutchmanleather.com</a></td>
+      <td class="date-cell">2026-04-21</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-21" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Petstable</span></td>
+      <td><a href="https://petstable.mx" target="_blank" rel="noopener" class="domain-link">petstable.mx</a></td>
+      <td>Luis Gerardo Flores</td>
+      <td><a href="mailto:luisgerardo@petstable.mx" class="email-link">luisgerardo@petstable.mx</a></td>
+      <td class="date-cell">2026-04-21</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-22" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">PatBO</span></td>
+      <td><a href="https://patbo.com" target="_blank" rel="noopener" class="domain-link">patbo.com</a></td>
+      <td>Erica Swalf</td>
+      <td><a href="mailto:erica.swalf@patbo.com" class="email-link">erica.swalf@patbo.com</a></td>
+      <td class="date-cell">2026-04-22</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-24" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Craftmix</span></td>
+      <td><a href="https://craftmix.com" target="_blank" rel="noopener" class="domain-link">craftmix.com</a></td>
+      <td>Lynnsey Baker</td>
+      <td><a href="mailto:lynnsey@craftmix.com" class="email-link">lynnsey@craftmix.com</a></td>
+      <td class="date-cell">2026-04-24</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-27" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">NC Chocolatier</span></td>
+      <td><a href="https://ncchocolatier.com" target="_blank" rel="noopener" class="domain-link">ncchocolatier.com</a></td>
+      <td>Zalman Teldon</td>
+      <td><a href="mailto:zalman@ncchocolatier.com" class="email-link">zalman@ncchocolatier.com</a></td>
+      <td class="date-cell">2026-04-27</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-27" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Freestyle Snacks</span></td>
+      <td><a href="https://freestylesnacking.com" target="_blank" rel="noopener" class="domain-link">freestylesnacking.com</a></td>
+      <td>Hannah Jablonski</td>
+      <td><a href="mailto:hannah@freestylesnacking.com" class="email-link">hannah@freestylesnacking.com</a></td>
+      <td class="date-cell">2026-04-27</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-28" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">DR-HO'S</span></td>
+      <td><a href="https://drhonow.com" target="_blank" rel="noopener" class="domain-link">drhonow.com</a></td>
+      <td>Vincent Ho</td>
+      <td><a href="mailto:vho@drhonow.com" class="email-link">vho@drhonow.com</a></td>
+      <td class="date-cell">2026-04-28</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-29" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Urban Platter</span></td>
+      <td><a href="https://urbanplatter.com" target="_blank" rel="noopener" class="domain-link">urbanplatter.com</a></td>
+      <td>Yash Dani</td>
+      <td><a href="mailto:yash@glamble.com" class="email-link">yash@glamble.com</a></td>
+      <td class="date-cell">2026-04-29</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-29" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Evan Alexander Grooming</span></td>
+      <td><a href="https://evanalexandergrooming.com" target="_blank" rel="noopener" class="domain-link">evanalexandergrooming.com</a></td>
+      <td>Brandon Patton</td>
+      <td><a href="mailto:brandon@evanalexandergrooming.com" class="email-link">brandon@evanalexandergrooming.com</a></td>
+      <td class="date-cell">2026-04-29</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-29" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Sarah Creal Beauty</span></td>
+      <td><a href="https://sarahcrealbeauty.com" target="_blank" rel="noopener" class="domain-link">sarahcrealbeauty.com</a></td>
+      <td>Tin</td>
+      <td><a href="mailto:tin@sarahcrealbeauty.com" class="email-link">tin@sarahcrealbeauty.com</a></td>
+      <td class="date-cell">2026-04-29</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-30" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Echo-Sigma</span></td>
+      <td><a href="https://echo-sigma.com" target="_blank" rel="noopener" class="domain-link">echo-sigma.com</a></td>
+      <td>Chris Reidel</td>
+      <td><a href="mailto:chris@echo-sigma.com" class="email-link">chris@echo-sigma.com</a></td>
+      <td class="date-cell">2026-04-30</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-05" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Illuminate Labs</span></td>
+      <td><a href="https://illuminatelabs.org" target="_blank" rel="noopener" class="domain-link">illuminatelabs.org</a></td>
+      <td>Calloway Cook</td>
+      <td><a href="mailto:calloway@illuminatelabs.org" class="email-link">calloway@illuminatelabs.org</a></td>
+      <td class="date-cell">2026-05-05</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-06" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Urbanspace</span></td>
+      <td><a href="https://urbanspacemarkets.com" target="_blank" rel="noopener" class="domain-link">urbanspacemarkets.com</a></td>
+      <td>Eldon Scott</td>
+      <td><a href="mailto:escott@urbanspacemarkets.com" class="email-link">escott@urbanspacemarkets.com</a></td>
+      <td class="date-cell">2026-05-06</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-08" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Imperia Caviar</span></td>
+      <td><a href="https://imperiacaviar.com" target="_blank" rel="noopener" class="domain-link">imperiacaviar.com</a></td>
+      <td>Daniel Lee</td>
+      <td><a href="mailto:daniel@imperiacaviar.com" class="email-link">daniel@imperiacaviar.com</a></td>
+      <td class="date-cell">2026-05-08</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-11" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Right Hook Digital</span></td>
+      <td><a href="https://righthookdigital.com" target="_blank" rel="noopener" class="domain-link">righthookdigital.com</a></td>
+      <td>Andrew Lauchner</td>
+      <td><a href="mailto:drew@righthookdigital.com" class="email-link">drew@righthookdigital.com</a></td>
+      <td class="date-cell">2026-05-11</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-13" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Pineridge Hollow</span></td>
+      <td><a href="https://pineridgehollow.com" target="_blank" rel="noopener" class="domain-link">pineridgehollow.com</a></td>
+      <td>Zach Regehr</td>
+      <td><a href="mailto:zach@pineirdgehollow.com" class="email-link">zach@pineirdgehollow.com</a></td>
+      <td class="date-cell">2026-05-13</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-18" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Concrete Tools Direct</span></td>
+      <td><a href="https://concretetoolsdirect.com" target="_blank" rel="noopener" class="domain-link">concretetoolsdirect.com</a></td>
+      <td>Kamila</td>
+      <td><a href="mailto:kamila@concretetoolsdirect.com" class="email-link">kamila@concretetoolsdirect.com</a></td>
+      <td class="date-cell">2026-05-18</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-19" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Purition</span></td>
+      <td><a href="https://purition.co.uk" target="_blank" rel="noopener" class="domain-link">purition.co.uk</a></td>
+      <td>Matt</td>
+      <td><a href="mailto:matthew@purition.co.uk" class="email-link">matthew@purition.co.uk</a></td>
+      <td class="date-cell">2026-05-19</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-20" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Miamily</span></td>
+      <td><a href="https://miamily.com" target="_blank" rel="noopener" class="domain-link">miamily.com</a></td>
+      <td>Francesco Fabris</td>
+      <td><a href="mailto:francesco@miamily.com" class="email-link">francesco@miamily.com</a></td>
+      <td class="date-cell">2026-05-20</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-06-15" data-platform="—" data-category="—" data-country="—">
+      <td><span class="store-name">Symphony Natural Health</span></td>
+      <td><a href="https://symphonynaturalhealth.com" target="_blank" rel="noopener" class="domain-link">symphonynaturalhealth.com</a></td>
+      <td>Chelsey Gray</td>
+      <td><a href="mailto:chelsey.gray@symphonynaturalhealth.com" class="email-link">chelsey.gray@symphonynaturalhealth.com</a></td>
+      <td class="date-cell">2026-06-15</td>
+      <td><span class="platform-badge ">—</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td class="num-cell"><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="na">N/A</span></td>
+      <td><span class="score score-low">0</span></td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <section class="not-found-section">
+    <h2 class="section-title">Not Found <span class="badge">26</span></h2>
+    <p class="not-found-desc">The following domains returned no data from the StoreLeads API:</p>
+    <div class="not-found-grid">
+      
+      <div class="not-found-card">
+        <div class="nf-domain">nativepath.com</div>
+        <div class="nf-company">NativePath</div>
+        <div class="nf-contact">Chiquita Johnson · chiquita.johnson@nativepath.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">pinaq.com</div>
+        <div class="nf-company">Pinaq Liqueur</div>
+        <div class="nf-contact">Tom Curtin · tom.curtin@pinaq.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">happyluckys.com</div>
+        <div class="nf-company">Happy Lucky's Teahouse</div>
+        <div class="nf-contact">George Grossman · george@happyluckys.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">dawbu.com</div>
+        <div class="nf-company">Dawbu</div>
+        <div class="nf-contact">Kartik · kartik@theaffordableorganicstore.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">umbertogiannini.com</div>
+        <div class="nf-company">Umberto Giannini</div>
+        <div class="nf-contact">Kate B · ecommerce@umbertogiannini.co.uk</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">shapewearusa.com</div>
+        <div class="nf-company">Shapewearusa.com</div>
+        <div class="nf-contact">Steve Jones · sjones@shapewearusa.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">lostdutchmanleather.com</div>
+        <div class="nf-company">Lost Dutchman Leather</div>
+        <div class="nf-contact">Olivia · olivia@lostdutchmanleather.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">petstable.mx</div>
+        <div class="nf-company">Petstable</div>
+        <div class="nf-contact">Luis Gerardo Flores · luisgerardo@petstable.mx</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">patbo.com</div>
+        <div class="nf-company">PatBO</div>
+        <div class="nf-contact">Erica Swalf · erica.swalf@patbo.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">craftmix.com</div>
+        <div class="nf-company">Craftmix</div>
+        <div class="nf-contact">Lynnsey Baker · lynnsey@craftmix.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">ncchocolatier.com</div>
+        <div class="nf-company">NC Chocolatier</div>
+        <div class="nf-contact">Zalman Teldon · zalman@ncchocolatier.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">freestylesnacking.com</div>
+        <div class="nf-company">Freestyle Snacks</div>
+        <div class="nf-contact">Hannah Jablonski · hannah@freestylesnacking.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">drhonow.com</div>
+        <div class="nf-company">DR-HO'S</div>
+        <div class="nf-contact">Vincent Ho · vho@drhonow.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">urbanplatter.com</div>
+        <div class="nf-company">Urban Platter</div>
+        <div class="nf-contact">Yash Dani · yash@glamble.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">evanalexandergrooming.com</div>
+        <div class="nf-company">Evan Alexander Grooming</div>
+        <div class="nf-contact">Brandon Patton · brandon@evanalexandergrooming.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">sarahcrealbeauty.com</div>
+        <div class="nf-company">Sarah Creal Beauty</div>
+        <div class="nf-contact">Tin · tin@sarahcrealbeauty.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">echo-sigma.com</div>
+        <div class="nf-company">Echo-Sigma</div>
+        <div class="nf-contact">Chris Reidel · chris@echo-sigma.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">illuminatelabs.org</div>
+        <div class="nf-company">Illuminate Labs</div>
+        <div class="nf-contact">Calloway Cook · calloway@illuminatelabs.org</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">urbanspacemarkets.com</div>
+        <div class="nf-company">Urbanspace</div>
+        <div class="nf-contact">Eldon Scott · escott@urbanspacemarkets.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">imperiacaviar.com</div>
+        <div class="nf-company">Imperia Caviar</div>
+        <div class="nf-contact">Daniel Lee · daniel@imperiacaviar.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">righthookdigital.com</div>
+        <div class="nf-company">Right Hook Digital</div>
+        <div class="nf-contact">Andrew Lauchner · drew@righthookdigital.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">pineridgehollow.com</div>
+        <div class="nf-company">Pineridge Hollow</div>
+        <div class="nf-contact">Zach Regehr · zach@pineirdgehollow.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">concretetoolsdirect.com</div>
+        <div class="nf-company">Concrete Tools Direct</div>
+        <div class="nf-contact">Kamila · kamila@concretetoolsdirect.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">purition.co.uk</div>
+        <div class="nf-company">Purition</div>
+        <div class="nf-contact">Matt · matthew@purition.co.uk</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">miamily.com</div>
+        <div class="nf-company">Miamily</div>
+        <div class="nf-contact">Francesco Fabris · francesco@miamily.com</div>
+      </div>
+      <div class="not-found-card">
+        <div class="nf-domain">symphonynaturalhealth.com</div>
+        <div class="nf-company">Symphony Natural Health</div>
+        <div class="nf-contact">Chelsey Gray · chelsey.gray@symphonynaturalhealth.com</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p>OneText · StoreLeads Outbound Analysis · Data sourced from StoreLeads API · May 18, 2026 at 5:22 PM UTC</p>
+  <p style="margin-top:6px">Priority score: Revenue &gt;$10M (+3) · Traffic &gt;100K (+2) · Avg Price &gt;$50 (+2) · Shopify (+1) · Has Social (+1) · US-based (+1) · Max 10</p>
+</footer>
+
+<script>
+(function() {
+  const tbody = document.getElementById('table-body');
+  const ths = document.querySelectorAll('th[data-col]');
+  let sortCol = 'score';
+  let sortDir = -1;
+
+  const colMap = {
+    storeName: r => r.querySelector('.store-name')?.textContent.trim() ?? '',
+    domain: r => r.dataset.score,
+    contactName: r => r.cells[2].textContent.trim(),
+    email: r => r.cells[3].textContent.trim(),
+    demoDate: r => r.dataset.date,
+    platform: r => r.dataset.platform,
+    revenue: r => parseFloat(r.dataset.revenue) || 0,
+    traffic: r => parseFloat(r.dataset.traffic) || 0,
+    avgPrice: r => parseFloat(r.dataset.price) || 0,
+    category: r => r.dataset.category,
+    country: r => r.dataset.country,
+    score: r => parseFloat(r.dataset.score) || 0,
+  };
+
+  function sortTable(col) {
+    if (sortCol === col) sortDir *= -1;
+    else { sortCol = col; sortDir = -1; }
+
+    ths.forEach(th => {
+      th.classList.remove('sorted-asc', 'sorted-desc');
+      if (th.dataset.col === col) {
+        th.classList.add(sortDir === 1 ? 'sorted-asc' : 'sorted-desc');
+      }
+    });
+
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    rows.sort((a, b) => {
+      const av = colMap[col]?.(a) ?? '';
+      const bv = colMap[col]?.(b) ?? '';
+      if (typeof av === 'number') return (av - bv) * sortDir;
+      return av.localeCompare(bv) * sortDir;
+    });
+    rows.forEach(r => tbody.appendChild(r));
+  }
+
+  ths.forEach(th => th.addEventListener('click', () => sortTable(th.dataset.col)));
+
+  // Initial sort by score desc
+  sortTable('score');
+})();
+</script>
+</body>
+</html>
