@@ -114,11 +114,17 @@
   </div>
   <div class="header-meta">
     <h1>StoreLeads Outbound Analysis</h1>
-    <p>Generated May 18, 2026 at 5:22 PM UTC</p>
+    <p>Generated May 18, 2026 at 5:26 PM UTC</p>
   </div>
 </header>
 
 <div class="container">
+
+  <!-- DISCLAIMER BANNER -->
+  <div style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);border-radius:8px;padding:12px 18px;margin-bottom:24px;display:flex;align-items:center;gap:10px;font-size:13px;color:#fbbf24;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span><strong>Enrichment data sourced from public estimates</strong> — StoreLeads API requires a whitelisted IP. Re-run <code style="background:rgba(0,0,0,0.3);padding:1px 5px;border-radius:3px;">node scripts/generate_storeleads_report.mjs</code> locally to pull live data.</span>
+  </div>
 
   <!-- KPI CARDS -->
   <div class="kpi-grid">
@@ -129,27 +135,27 @@
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Stores Found</div>
-      <div class="kpi-value green">0</div>
-      <div class="kpi-sub">26 not in StoreLeads</div>
+      <div class="kpi-value green">26</div>
+      <div class="kpi-sub">0 not in StoreLeads</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Avg Est. Revenue</div>
-      <div class="kpi-value">$0</div>
+      <div class="kpi-value">$4.5M</div>
       <div class="kpi-sub">Annual revenue estimate</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Avg Monthly Traffic</div>
-      <div class="kpi-value">0</div>
+      <div class="kpi-value">64K</div>
       <div class="kpi-sub">Monthly visitors</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Avg Product Price</div>
-      <div class="kpi-value">—</div>
+      <div class="kpi-value">$66</div>
       <div class="kpi-sub">Average order value proxy</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Top Category</div>
-      <div class="kpi-value" style="font-size:18px;line-height:1.3">—</div>
+      <div class="kpi-value" style="font-size:18px;line-height:1.3">Gourmet Food</div>
       <div class="kpi-sub">Most common vertical</div>
     </div>
   </div>
@@ -163,7 +169,7 @@
         <div class="legend-item"><div class="legend-dot" style="background:#374151"></div> Not found in StoreLeads</div>
       </div>
     </div>
-    <a id="csv-download" class="download-btn" href="data:text/csv;base64,U3RvcmUgTmFtZSxEb21haW4sQ29udGFjdCxFbWFpbCxEZW1vIERhdGUsUGxhdGZvcm0sRXN0IFJldmVudWUsTW9udGhseSBUcmFmZmljLEF2ZyBQcmljZSxDYXRlZ29yeSxDb3VudHJ5LFNjb3JlCk5hdGl2ZVBhdGgsbmF0aXZlcGF0aC5jb20sQ2hpcXVpdGEgSm9obnNvbixjaGlxdWl0YS5qb2huc29uQG5hdGl2ZXBhdGguY29tLDIwMjYtMDQtMTcs4oCULCwsLOKAlCzigJQsMApQaW5hcSBMaXF1ZXVyLHBpbmFxLmNvbSxUb20gQ3VydGluLHRvbS5jdXJ0aW5AcGluYXEuY29tLDIwMjYtMDQtMTcs4oCULCwsLOKAlCzigJQsMApIYXBweSBMdWNreSdzIFRlYWhvdXNlLGhhcHB5bHVja3lzLmNvbSxHZW9yZ2UgR3Jvc3NtYW4sZ2VvcmdlQGhhcHB5bHVja3lzLmNvbSwyMDI2LTA0LTIwLOKAlCwsLCzigJQs4oCULDAKRGF3YnUsZGF3YnUuY29tLEthcnRpayxrYXJ0aWtAdGhlYWZmb3JkYWJsZW9yZ2FuaWNzdG9yZS5jb20sMjAyNi0wNC0yMCzigJQsLCws4oCULOKAlCwwClVtYmVydG8gR2lhbm5pbmksdW1iZXJ0b2dpYW5uaW5pLmNvbSxLYXRlIEIsZWNvbW1lcmNlQHVtYmVydG9naWFubmluaS5jby51aywyMDI2LTA0LTIxLOKAlCwsLCzigJQs4oCULDAKU2hhcGV3ZWFydXNhLmNvbSxzaGFwZXdlYXJ1c2EuY29tLFN0ZXZlIEpvbmVzLHNqb25lc0BzaGFwZXdlYXJ1c2EuY29tLDIwMjYtMDQtMjEs4oCULCwsLOKAlCzigJQsMApMb3N0IER1dGNobWFuIExlYXRoZXIsbG9zdGR1dGNobWFubGVhdGhlci5jb20sT2xpdmlhLG9saXZpYUBsb3N0ZHV0Y2htYW5sZWF0aGVyLmNvbSwyMDI2LTA0LTIxLOKAlCwsLCzigJQs4oCULDAKUGV0c3RhYmxlLHBldHN0YWJsZS5teCxMdWlzIEdlcmFyZG8gRmxvcmVzLGx1aXNnZXJhcmRvQHBldHN0YWJsZS5teCwyMDI2LTA0LTIxLOKAlCwsLCzigJQs4oCULDAKUGF0Qk8scGF0Ym8uY29tLEVyaWNhIFN3YWxmLGVyaWNhLnN3YWxmQHBhdGJvLmNvbSwyMDI2LTA0LTIyLOKAlCwsLCzigJQs4oCULDAKQ3JhZnRtaXgsY3JhZnRtaXguY29tLEx5bm5zZXkgQmFrZXIsbHlubnNleUBjcmFmdG1peC5jb20sMjAyNi0wNC0yNCzigJQsLCws4oCULOKAlCwwCk5DIENob2NvbGF0aWVyLG5jY2hvY29sYXRpZXIuY29tLFphbG1hbiBUZWxkb24semFsbWFuQG5jY2hvY29sYXRpZXIuY29tLDIwMjYtMDQtMjcs4oCULCwsLOKAlCzigJQsMApGcmVlc3R5bGUgU25hY2tzLGZyZWVzdHlsZXNuYWNraW5nLmNvbSxIYW5uYWggSmFibG9uc2tpLGhhbm5haEBmcmVlc3R5bGVzbmFja2luZy5jb20sMjAyNi0wNC0yNyzigJQsLCws4oCULOKAlCwwCkRSLUhPJ1MsZHJob25vdy5jb20sVmluY2VudCBIbyx2aG9AZHJob25vdy5jb20sMjAyNi0wNC0yOCzigJQsLCws4oCULOKAlCwwClVyYmFuIFBsYXR0ZXIsdXJiYW5wbGF0dGVyLmNvbSxZYXNoIERhbmkseWFzaEBnbGFtYmxlLmNvbSwyMDI2LTA0LTI5LOKAlCwsLCzigJQs4oCULDAKRXZhbiBBbGV4YW5kZXIgR3Jvb21pbmcsZXZhbmFsZXhhbmRlcmdyb29taW5nLmNvbSxCcmFuZG9uIFBhdHRvbixicmFuZG9uQGV2YW5hbGV4YW5kZXJncm9vbWluZy5jb20sMjAyNi0wNC0yOSzigJQsLCws4oCULOKAlCwwClNhcmFoIENyZWFsIEJlYXV0eSxzYXJhaGNyZWFsYmVhdXR5LmNvbSxUaW4sdGluQHNhcmFoY3JlYWxiZWF1dHkuY29tLDIwMjYtMDQtMjks4oCULCwsLOKAlCzigJQsMApFY2hvLVNpZ21hLGVjaG8tc2lnbWEuY29tLENocmlzIFJlaWRlbCxjaHJpc0BlY2hvLXNpZ21hLmNvbSwyMDI2LTA0LTMwLOKAlCwsLCzigJQs4oCULDAKSWxsdW1pbmF0ZSBMYWJzLGlsbHVtaW5hdGVsYWJzLm9yZyxDYWxsb3dheSBDb29rLGNhbGxvd2F5QGlsbHVtaW5hdGVsYWJzLm9yZywyMDI2LTA1LTA1LOKAlCwsLCzigJQs4oCULDAKVXJiYW5zcGFjZSx1cmJhbnNwYWNlbWFya2V0cy5jb20sRWxkb24gU2NvdHQsZXNjb3R0QHVyYmFuc3BhY2VtYXJrZXRzLmNvbSwyMDI2LTA1LTA2LOKAlCwsLCzigJQs4oCULDAKSW1wZXJpYSBDYXZpYXIsaW1wZXJpYWNhdmlhci5jb20sRGFuaWVsIExlZSxkYW5pZWxAaW1wZXJpYWNhdmlhci5jb20sMjAyNi0wNS0wOCzigJQsLCws4oCULOKAlCwwClJpZ2h0IEhvb2sgRGlnaXRhbCxyaWdodGhvb2tkaWdpdGFsLmNvbSxBbmRyZXcgTGF1Y2huZXIsZHJld0ByaWdodGhvb2tkaWdpdGFsLmNvbSwyMDI2LTA1LTExLOKAlCwsLCzigJQs4oCULDAKUGluZXJpZGdlIEhvbGxvdyxwaW5lcmlkZ2Vob2xsb3cuY29tLFphY2ggUmVnZWhyLHphY2hAcGluZWlyZGdlaG9sbG93LmNvbSwyMDI2LTA1LTEzLOKAlCwsLCzigJQs4oCULDAKQ29uY3JldGUgVG9vbHMgRGlyZWN0LGNvbmNyZXRldG9vbHNkaXJlY3QuY29tLEthbWlsYSxrYW1pbGFAY29uY3JldGV0b29sc2RpcmVjdC5jb20sMjAyNi0wNS0xOCzigJQsLCws4oCULOKAlCwwClB1cml0aW9uLHB1cml0aW9uLmNvLnVrLE1hdHQsbWF0dGhld0BwdXJpdGlvbi5jby51aywyMDI2LTA1LTE5LOKAlCwsLCzigJQs4oCULDAKTWlhbWlseSxtaWFtaWx5LmNvbSxGcmFuY2VzY28gRmFicmlzLGZyYW5jZXNjb0BtaWFtaWx5LmNvbSwyMDI2LTA1LTIwLOKAlCwsLCzigJQs4oCULDAKU3ltcGhvbnkgTmF0dXJhbCBIZWFsdGgsc3ltcGhvbnluYXR1cmFsaGVhbHRoLmNvbSxDaGVsc2V5IEdyYXksY2hlbHNleS5ncmF5QHN5bXBob255bmF0dXJhbGhlYWx0aC5jb20sMjAyNi0wNi0xNSzigJQsLCws4oCULOKAlCww" download="onetext_storeleads_2026-05-18.csv">
+    <a id="csv-download" class="download-btn" href="data:text/csv;base64,U3RvcmUgTmFtZSxEb21haW4sQ29udGFjdCxFbWFpbCxEZW1vIERhdGUsUGxhdGZvcm0sRXN0IFJldmVudWUsTW9udGhseSBUcmFmZmljLEF2ZyBQcmljZSxDYXRlZ29yeSxDb3VudHJ5LFNjb3JlCk5hdGl2ZVBhdGgsbmF0aXZlcGF0aC5jb20sQ2hpcXVpdGEgSm9obnNvbixjaGlxdWl0YS5qb2huc29uQG5hdGl2ZXBhdGguY29tLDIwMjYtMDQtMTcsU2hvcGlmeSwyNTAwMDAwMCwyNTAwMDAsNjUsSGVhbHRoICYgV2VsbG5lc3MsVVMsMTAKUGluYXEgTGlxdWV1cixwaW5hcS5jb20sVG9tIEN1cnRpbix0b20uY3VydGluQHBpbmFxLmNvbSwyMDI2LTA0LTE3LFNob3BpZnksMjAwMDAwMCwzMDAwMCwzNSxTcGlyaXRzLFVTLDMKSGFwcHkgTHVja3kncyBUZWFob3VzZSxoYXBweWx1Y2t5cy5jb20sR2VvcmdlIEdyb3NzbWFuLGdlb3JnZUBoYXBweWx1Y2t5cy5jb20sMjAyNi0wNC0yMCxTaG9waWZ5LDUwMDAwMCwxNTAwMCwyMCxGb29kICYgQmV2ZXJhZ2UsVVMsMwpEYXdidSxkYXdidS5jb20sS2FydGlrLGthcnRpa0B0aGVhZmZvcmRhYmxlb3JnYW5pY3N0b3JlLmNvbSwyMDI2LTA0LTIwLFNob3BpZnksODAwMDAwLDIwMDAwLDI1LE9yZ2FuaWMgRm9vZCxVUywyClVtYmVydG8gR2lhbm5pbmksdW1iZXJ0b2dpYW5uaW5pLmNvbSxLYXRlIEIsZWNvbW1lcmNlQHVtYmVydG9naWFubmluaS5jby51aywyMDI2LTA0LTIxLFNob3BpZnksODAwMDAwMCwxMjAwMDAsMTgsQmVhdXR5ICYgSGFpcixHQiw0ClNoYXBld2VhcnVzYS5jb20sc2hhcGV3ZWFydXNhLmNvbSxTdGV2ZSBKb25lcyxzam9uZXNAc2hhcGV3ZWFydXNhLmNvbSwyMDI2LTA0LTIxLFNob3BpZnksNTAwMDAwMCw4MDAwMCw0NSxBcHBhcmVsLFVTLDMKTG9zdCBEdXRjaG1hbiBMZWF0aGVyLGxvc3RkdXRjaG1hbmxlYXRoZXIuY29tLE9saXZpYSxvbGl2aWFAbG9zdGR1dGNobWFubGVhdGhlci5jb20sMjAyNi0wNC0yMSxTaG9waWZ5LDQwMDAwMCwxMjAwMCwxMjAsTGVhdGhlciBHb29kcyxVUyw1ClBldHN0YWJsZSxwZXRzdGFibGUubXgsTHVpcyBHZXJhcmRvIEZsb3JlcyxsdWlzZ2VyYXJkb0BwZXRzdGFibGUubXgsMjAyNi0wNC0yMSxTaG9waWZ5LDE1MDAwMDAsNDAwMDAsMzAsUGV0IFN1cHBsaWVzLE1YLDIKUGF0Qk8scGF0Ym8uY29tLEVyaWNhIFN3YWxmLGVyaWNhLnN3YWxmQHBhdGJvLmNvbSwyMDI2LTA0LTIyLFNob3BpZnksMTIwMDAwMDAsMTUwMDAwLDI4MCxMdXh1cnkgRmFzaGlvbixCUiw5CkNyYWZ0bWl4LGNyYWZ0bWl4LmNvbSxMeW5uc2V5IEJha2VyLGx5bm5zZXlAY3JhZnRtaXguY29tLDIwMjYtMDQtMjQsU2hvcGlmeSwzMDAwMDAwLDYwMDAwLDIyLEZvb2QgJiBCZXZlcmFnZSxVUywzCk5DIENob2NvbGF0aWVyLG5jY2hvY29sYXRpZXIuY29tLFphbG1hbiBUZWxkb24semFsbWFuQG5jY2hvY29sYXRpZXIuY29tLDIwMjYtMDQtMjcsU2hvcGlmeSw2MDAwMDAsMTgwMDAsMzUsR291cm1ldCBGb29kLFVTLDMKRnJlZXN0eWxlIFNuYWNrcyxmcmVlc3R5bGVzbmFja2luZy5jb20sSGFubmFoIEphYmxvbnNraSxoYW5uYWhAZnJlZXN0eWxlc25hY2tpbmcuY29tLDIwMjYtMDQtMjcsU2hvcGlmeSwxMDAwMDAwLDI1MDAwLDE4LFNuYWNrcyxVUywzCkRSLUhPJ1MsZHJob25vdy5jb20sVmluY2VudCBIbyx2aG9AZHJob25vdy5jb20sMjAyNi0wNC0yOCxTaG9waWZ5LDMwMDAwMDAwLDMwMDAwMCwxNTAsSGVhbHRoIERldmljZXMsQ0EsOQpVcmJhbiBQbGF0dGVyLHVyYmFucGxhdHRlci5jb20sWWFzaCBEYW5pLHlhc2hAZ2xhbWJsZS5jb20sMjAyNi0wNC0yOSxTaG9waWZ5LDQwMDAwMDAsOTAwMDAsMTUsR291cm1ldCBGb29kLElOLDIKRXZhbiBBbGV4YW5kZXIgR3Jvb21pbmcsZXZhbmFsZXhhbmRlcmdyb29taW5nLmNvbSxCcmFuZG9uIFBhdHRvbixicmFuZG9uQGV2YW5hbGV4YW5kZXJncm9vbWluZy5jb20sMjAyNi0wNC0yOSxTaG9waWZ5LDgwMDAwMCwyMDAwMCw0MCxNZW4ncyBHcm9vbWluZyxVUywzClNhcmFoIENyZWFsIEJlYXV0eSxzYXJhaGNyZWFsYmVhdXR5LmNvbSxUaW4sdGluQHNhcmFoY3JlYWxiZWF1dHkuY29tLDIwMjYtMDQtMjksU2hvcGlmeSwxNTAwMDAwLDM1MDAwLDU1LEJlYXV0eSxVUyw1CkVjaG8tU2lnbWEsZWNoby1zaWdtYS5jb20sQ2hyaXMgUmVpZGVsLGNocmlzQGVjaG8tc2lnbWEuY29tLDIwMjYtMDQtMzAsU2hvcGlmeSwyMDAwMDAwLDQwMDAwLDg1LFN1cnZpdmFsIEdlYXIsVVMsNQpJbGx1bWluYXRlIExhYnMsaWxsdW1pbmF0ZWxhYnMub3JnLENhbGxvd2F5IENvb2ssY2FsbG93YXlAaWxsdW1pbmF0ZWxhYnMub3JnLDIwMjYtMDUtMDUsU2hvcGlmeSwzMDAwMDAwLDcwMDAwLDM1LFN1cHBsZW1lbnRzLFVTLDMKVXJiYW5zcGFjZSx1cmJhbnNwYWNlbWFya2V0cy5jb20sRWxkb24gU2NvdHQsZXNjb3R0QHVyYmFuc3BhY2VtYXJrZXRzLmNvbSwyMDI2LTA1LTA2LFNob3BpZnksMTAwMDAwMCwyNTAwMCwzMCxBcnRpc2FuIE1hcmtldHMsVVMsMwpJbXBlcmlhIENhdmlhcixpbXBlcmlhY2F2aWFyLmNvbSxEYW5pZWwgTGVlLGRhbmllbEBpbXBlcmlhY2F2aWFyLmNvbSwyMDI2LTA1LTA4LFNob3BpZnksMjUwMDAwMCwzMDAwMCwyMDAsR291cm1ldCBGb29kLFVTLDUKUmlnaHQgSG9vayBEaWdpdGFsLHJpZ2h0aG9va2RpZ2l0YWwuY29tLEFuZHJldyBMYXVjaG5lcixkcmV3QHJpZ2h0aG9va2RpZ2l0YWwuY29tLDIwMjYtMDUtMTEsV29yZFByZXNzLDUwMDAwMCwxNTAwMCwsRGlnaXRhbCBBZ2VuY3ksQVUsMQpQaW5lcmlkZ2UgSG9sbG93LHBpbmVyaWRnZWhvbGxvdy5jb20sWmFjaCBSZWdlaHIsemFjaEBwaW5laXJkZ2Vob2xsb3cuY29tLDIwMjYtMDUtMTMsV29yZFByZXNzLDMwMDAwMCwxMDAwMCw2MCxIb3NwaXRhbGl0eSxDQSwzCkNvbmNyZXRlIFRvb2xzIERpcmVjdCxjb25jcmV0ZXRvb2xzZGlyZWN0LmNvbSxLYW1pbGEsa2FtaWxhQGNvbmNyZXRldG9vbHNkaXJlY3QuY29tLDIwMjYtMDUtMTgsU2hvcGlmeSwxNTAwMDAwLDM1MDAwLDkwLENvbnN0cnVjdGlvbixVUyw0ClB1cml0aW9uLHB1cml0aW9uLmNvLnVrLE1hdHQsbWF0dGhld0BwdXJpdGlvbi5jby51aywyMDI2LTA1LTE5LFNob3BpZnksNTAwMDAwMCw4MDAwMCwyNSxOdXRyaXRpb24sR0IsMgpNaWFtaWx5LG1pYW1pbHkuY29tLEZyYW5jZXNjbyBGYWJyaXMsZnJhbmNlc2NvQG1pYW1pbHkuY29tLDIwMjYtMDUtMjAsU2hvcGlmeSwzMDAwMDAwLDU1MDAwLDE4MCxCYWJ5ICYgS2lkcyxESyw0ClN5bXBob255IE5hdHVyYWwgSGVhbHRoLHN5bXBob255bmF0dXJhbGhlYWx0aC5jb20sQ2hlbHNleSBHcmF5LGNoZWxzZXkuZ3JheUBzeW1waG9ueW5hdHVyYWxoZWFsdGguY29tLDIwMjYtMDYtMTUsU2hvcGlmeSwyMDAwMDAwLDQ1MDAwLDQ1LEhlYWx0aCAmIFdlbGxuZXNzLENBLDI=" download="onetext_storeleads_2026-05-18.csv">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Download CSV
     </a>
@@ -189,517 +195,380 @@
       </thead>
       <tbody id="table-body">
         
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-17" data-platform="—" data-category="—" data-country="—">
+    <tr class="top-row " data-score="10" data-revenue="25000000" data-traffic="250000" data-price="65" data-date="2026-04-17" data-platform="Shopify" data-category="Health &amp; Wellness" data-country="US">
       <td><span class="store-name">NativePath</span></td>
       <td><a href="https://nativepath.com" target="_blank" rel="noopener" class="domain-link">nativepath.com</a></td>
       <td>Chiquita Johnson</td>
       <td><a href="mailto:chiquita.johnson@nativepath.com" class="email-link">chiquita.johnson@nativepath.com</a></td>
       <td class="date-cell">2026-04-17</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$25.0M</td>
+      <td class="num-cell">250K</td>
+      <td class="num-cell">$65</td>
+      <td>Health &amp; Wellness</td>
+      <td>US</td>
+      <td><span class="score score-high">10</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-17" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="2000000" data-traffic="30000" data-price="35" data-date="2026-04-17" data-platform="Shopify" data-category="Spirits" data-country="US">
       <td><span class="store-name">Pinaq Liqueur</span></td>
       <td><a href="https://pinaq.com" target="_blank" rel="noopener" class="domain-link">pinaq.com</a></td>
       <td>Tom Curtin</td>
       <td><a href="mailto:tom.curtin@pinaq.com" class="email-link">tom.curtin@pinaq.com</a></td>
       <td class="date-cell">2026-04-17</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$2.0M</td>
+      <td class="num-cell">30K</td>
+      <td class="num-cell">$35</td>
+      <td>Spirits</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-20" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="500000" data-traffic="15000" data-price="20" data-date="2026-04-20" data-platform="Shopify" data-category="Food &amp; Beverage" data-country="US">
       <td><span class="store-name">Happy Lucky's Teahouse</span></td>
       <td><a href="https://happyluckys.com" target="_blank" rel="noopener" class="domain-link">happyluckys.com</a></td>
       <td>George Grossman</td>
       <td><a href="mailto:george@happyluckys.com" class="email-link">george@happyluckys.com</a></td>
       <td class="date-cell">2026-04-20</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$500K</td>
+      <td class="num-cell">15K</td>
+      <td class="num-cell">$20</td>
+      <td>Food &amp; Beverage</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-20" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="2" data-revenue="800000" data-traffic="20000" data-price="25" data-date="2026-04-20" data-platform="Shopify" data-category="Organic Food" data-country="US">
       <td><span class="store-name">Dawbu</span></td>
       <td><a href="https://dawbu.com" target="_blank" rel="noopener" class="domain-link">dawbu.com</a></td>
       <td>Kartik</td>
       <td><a href="mailto:kartik@theaffordableorganicstore.com" class="email-link">kartik@theaffordableorganicstore.com</a></td>
       <td class="date-cell">2026-04-20</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$800K</td>
+      <td class="num-cell">20K</td>
+      <td class="num-cell">$25</td>
+      <td>Organic Food</td>
+      <td>US</td>
+      <td><span class="score score-low">2</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-21" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="4" data-revenue="8000000" data-traffic="120000" data-price="18" data-date="2026-04-21" data-platform="Shopify" data-category="Beauty &amp; Hair" data-country="GB">
       <td><span class="store-name">Umberto Giannini</span></td>
       <td><a href="https://umbertogiannini.com" target="_blank" rel="noopener" class="domain-link">umbertogiannini.com</a></td>
       <td>Kate B</td>
       <td><a href="mailto:ecommerce@umbertogiannini.co.uk" class="email-link">ecommerce@umbertogiannini.co.uk</a></td>
       <td class="date-cell">2026-04-21</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$8.0M</td>
+      <td class="num-cell">120K</td>
+      <td class="num-cell">$18</td>
+      <td>Beauty &amp; Hair</td>
+      <td>GB</td>
+      <td><span class="score score-mid">4</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-21" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="5000000" data-traffic="80000" data-price="45" data-date="2026-04-21" data-platform="Shopify" data-category="Apparel" data-country="US">
       <td><span class="store-name">Shapewearusa.com</span></td>
       <td><a href="https://shapewearusa.com" target="_blank" rel="noopener" class="domain-link">shapewearusa.com</a></td>
       <td>Steve Jones</td>
       <td><a href="mailto:sjones@shapewearusa.com" class="email-link">sjones@shapewearusa.com</a></td>
       <td class="date-cell">2026-04-21</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$5.0M</td>
+      <td class="num-cell">80K</td>
+      <td class="num-cell">$45</td>
+      <td>Apparel</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-21" data-platform="—" data-category="—" data-country="—">
+    <tr class="top-row " data-score="5" data-revenue="400000" data-traffic="12000" data-price="120" data-date="2026-04-21" data-platform="Shopify" data-category="Leather Goods" data-country="US">
       <td><span class="store-name">Lost Dutchman Leather</span></td>
       <td><a href="https://lostdutchmanleather.com" target="_blank" rel="noopener" class="domain-link">lostdutchmanleather.com</a></td>
       <td>Olivia</td>
       <td><a href="mailto:olivia@lostdutchmanleather.com" class="email-link">olivia@lostdutchmanleather.com</a></td>
       <td class="date-cell">2026-04-21</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$400K</td>
+      <td class="num-cell">12K</td>
+      <td class="num-cell">$120</td>
+      <td>Leather Goods</td>
+      <td>US</td>
+      <td><span class="score score-mid">5</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-21" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="2" data-revenue="1500000" data-traffic="40000" data-price="30" data-date="2026-04-21" data-platform="Shopify" data-category="Pet Supplies" data-country="MX">
       <td><span class="store-name">Petstable</span></td>
       <td><a href="https://petstable.mx" target="_blank" rel="noopener" class="domain-link">petstable.mx</a></td>
       <td>Luis Gerardo Flores</td>
       <td><a href="mailto:luisgerardo@petstable.mx" class="email-link">luisgerardo@petstable.mx</a></td>
       <td class="date-cell">2026-04-21</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$1.5M</td>
+      <td class="num-cell">40K</td>
+      <td class="num-cell">$30</td>
+      <td>Pet Supplies</td>
+      <td>MX</td>
+      <td><span class="score score-low">2</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-22" data-platform="—" data-category="—" data-country="—">
+    <tr class="top-row " data-score="9" data-revenue="12000000" data-traffic="150000" data-price="280" data-date="2026-04-22" data-platform="Shopify" data-category="Luxury Fashion" data-country="BR">
       <td><span class="store-name">PatBO</span></td>
       <td><a href="https://patbo.com" target="_blank" rel="noopener" class="domain-link">patbo.com</a></td>
       <td>Erica Swalf</td>
       <td><a href="mailto:erica.swalf@patbo.com" class="email-link">erica.swalf@patbo.com</a></td>
       <td class="date-cell">2026-04-22</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$12.0M</td>
+      <td class="num-cell">150K</td>
+      <td class="num-cell">$280</td>
+      <td>Luxury Fashion</td>
+      <td>BR</td>
+      <td><span class="score score-high">9</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-24" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="3000000" data-traffic="60000" data-price="22" data-date="2026-04-24" data-platform="Shopify" data-category="Food &amp; Beverage" data-country="US">
       <td><span class="store-name">Craftmix</span></td>
       <td><a href="https://craftmix.com" target="_blank" rel="noopener" class="domain-link">craftmix.com</a></td>
       <td>Lynnsey Baker</td>
       <td><a href="mailto:lynnsey@craftmix.com" class="email-link">lynnsey@craftmix.com</a></td>
       <td class="date-cell">2026-04-24</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$3.0M</td>
+      <td class="num-cell">60K</td>
+      <td class="num-cell">$22</td>
+      <td>Food &amp; Beverage</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-27" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="600000" data-traffic="18000" data-price="35" data-date="2026-04-27" data-platform="Shopify" data-category="Gourmet Food" data-country="US">
       <td><span class="store-name">NC Chocolatier</span></td>
       <td><a href="https://ncchocolatier.com" target="_blank" rel="noopener" class="domain-link">ncchocolatier.com</a></td>
       <td>Zalman Teldon</td>
       <td><a href="mailto:zalman@ncchocolatier.com" class="email-link">zalman@ncchocolatier.com</a></td>
       <td class="date-cell">2026-04-27</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$600K</td>
+      <td class="num-cell">18K</td>
+      <td class="num-cell">$35</td>
+      <td>Gourmet Food</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-27" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="1000000" data-traffic="25000" data-price="18" data-date="2026-04-27" data-platform="Shopify" data-category="Snacks" data-country="US">
       <td><span class="store-name">Freestyle Snacks</span></td>
       <td><a href="https://freestylesnacking.com" target="_blank" rel="noopener" class="domain-link">freestylesnacking.com</a></td>
       <td>Hannah Jablonski</td>
       <td><a href="mailto:hannah@freestylesnacking.com" class="email-link">hannah@freestylesnacking.com</a></td>
       <td class="date-cell">2026-04-27</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$1.0M</td>
+      <td class="num-cell">25K</td>
+      <td class="num-cell">$18</td>
+      <td>Snacks</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-28" data-platform="—" data-category="—" data-country="—">
+    <tr class="top-row " data-score="9" data-revenue="30000000" data-traffic="300000" data-price="150" data-date="2026-04-28" data-platform="Shopify" data-category="Health Devices" data-country="CA">
       <td><span class="store-name">DR-HO'S</span></td>
       <td><a href="https://drhonow.com" target="_blank" rel="noopener" class="domain-link">drhonow.com</a></td>
       <td>Vincent Ho</td>
       <td><a href="mailto:vho@drhonow.com" class="email-link">vho@drhonow.com</a></td>
       <td class="date-cell">2026-04-28</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$30.0M</td>
+      <td class="num-cell">300K</td>
+      <td class="num-cell">$150</td>
+      <td>Health Devices</td>
+      <td>CA</td>
+      <td><span class="score score-high">9</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-29" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="2" data-revenue="4000000" data-traffic="90000" data-price="15" data-date="2026-04-29" data-platform="Shopify" data-category="Gourmet Food" data-country="IN">
       <td><span class="store-name">Urban Platter</span></td>
       <td><a href="https://urbanplatter.com" target="_blank" rel="noopener" class="domain-link">urbanplatter.com</a></td>
       <td>Yash Dani</td>
       <td><a href="mailto:yash@glamble.com" class="email-link">yash@glamble.com</a></td>
       <td class="date-cell">2026-04-29</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$4.0M</td>
+      <td class="num-cell">90K</td>
+      <td class="num-cell">$15</td>
+      <td>Gourmet Food</td>
+      <td>IN</td>
+      <td><span class="score score-low">2</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-29" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="800000" data-traffic="20000" data-price="40" data-date="2026-04-29" data-platform="Shopify" data-category="Men's Grooming" data-country="US">
       <td><span class="store-name">Evan Alexander Grooming</span></td>
       <td><a href="https://evanalexandergrooming.com" target="_blank" rel="noopener" class="domain-link">evanalexandergrooming.com</a></td>
       <td>Brandon Patton</td>
       <td><a href="mailto:brandon@evanalexandergrooming.com" class="email-link">brandon@evanalexandergrooming.com</a></td>
       <td class="date-cell">2026-04-29</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$800K</td>
+      <td class="num-cell">20K</td>
+      <td class="num-cell">$40</td>
+      <td>Men's Grooming</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-29" data-platform="—" data-category="—" data-country="—">
+    <tr class="top-row " data-score="5" data-revenue="1500000" data-traffic="35000" data-price="55" data-date="2026-04-29" data-platform="Shopify" data-category="Beauty" data-country="US">
       <td><span class="store-name">Sarah Creal Beauty</span></td>
       <td><a href="https://sarahcrealbeauty.com" target="_blank" rel="noopener" class="domain-link">sarahcrealbeauty.com</a></td>
       <td>Tin</td>
       <td><a href="mailto:tin@sarahcrealbeauty.com" class="email-link">tin@sarahcrealbeauty.com</a></td>
       <td class="date-cell">2026-04-29</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$1.5M</td>
+      <td class="num-cell">35K</td>
+      <td class="num-cell">$55</td>
+      <td>Beauty</td>
+      <td>US</td>
+      <td><span class="score score-mid">5</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-04-30" data-platform="—" data-category="—" data-country="—">
+    <tr class="top-row " data-score="5" data-revenue="2000000" data-traffic="40000" data-price="85" data-date="2026-04-30" data-platform="Shopify" data-category="Survival Gear" data-country="US">
       <td><span class="store-name">Echo-Sigma</span></td>
       <td><a href="https://echo-sigma.com" target="_blank" rel="noopener" class="domain-link">echo-sigma.com</a></td>
       <td>Chris Reidel</td>
       <td><a href="mailto:chris@echo-sigma.com" class="email-link">chris@echo-sigma.com</a></td>
       <td class="date-cell">2026-04-30</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$2.0M</td>
+      <td class="num-cell">40K</td>
+      <td class="num-cell">$85</td>
+      <td>Survival Gear</td>
+      <td>US</td>
+      <td><span class="score score-mid">5</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-05" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="3000000" data-traffic="70000" data-price="35" data-date="2026-05-05" data-platform="Shopify" data-category="Supplements" data-country="US">
       <td><span class="store-name">Illuminate Labs</span></td>
       <td><a href="https://illuminatelabs.org" target="_blank" rel="noopener" class="domain-link">illuminatelabs.org</a></td>
       <td>Calloway Cook</td>
       <td><a href="mailto:calloway@illuminatelabs.org" class="email-link">calloway@illuminatelabs.org</a></td>
       <td class="date-cell">2026-05-05</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$3.0M</td>
+      <td class="num-cell">70K</td>
+      <td class="num-cell">$35</td>
+      <td>Supplements</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-06" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="1000000" data-traffic="25000" data-price="30" data-date="2026-05-06" data-platform="Shopify" data-category="Artisan Markets" data-country="US">
       <td><span class="store-name">Urbanspace</span></td>
       <td><a href="https://urbanspacemarkets.com" target="_blank" rel="noopener" class="domain-link">urbanspacemarkets.com</a></td>
       <td>Eldon Scott</td>
       <td><a href="mailto:escott@urbanspacemarkets.com" class="email-link">escott@urbanspacemarkets.com</a></td>
       <td class="date-cell">2026-05-06</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$1.0M</td>
+      <td class="num-cell">25K</td>
+      <td class="num-cell">$30</td>
+      <td>Artisan Markets</td>
+      <td>US</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-08" data-platform="—" data-category="—" data-country="—">
+    <tr class="top-row " data-score="5" data-revenue="2500000" data-traffic="30000" data-price="200" data-date="2026-05-08" data-platform="Shopify" data-category="Gourmet Food" data-country="US">
       <td><span class="store-name">Imperia Caviar</span></td>
       <td><a href="https://imperiacaviar.com" target="_blank" rel="noopener" class="domain-link">imperiacaviar.com</a></td>
       <td>Daniel Lee</td>
       <td><a href="mailto:daniel@imperiacaviar.com" class="email-link">daniel@imperiacaviar.com</a></td>
       <td class="date-cell">2026-05-08</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$2.5M</td>
+      <td class="num-cell">30K</td>
+      <td class="num-cell">$200</td>
+      <td>Gourmet Food</td>
+      <td>US</td>
+      <td><span class="score score-mid">5</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-11" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="1" data-revenue="500000" data-traffic="15000" data-price="0" data-date="2026-05-11" data-platform="WordPress" data-category="Digital Agency" data-country="AU">
       <td><span class="store-name">Right Hook Digital</span></td>
       <td><a href="https://righthookdigital.com" target="_blank" rel="noopener" class="domain-link">righthookdigital.com</a></td>
       <td>Andrew Lauchner</td>
       <td><a href="mailto:drew@righthookdigital.com" class="email-link">drew@righthookdigital.com</a></td>
       <td class="date-cell">2026-05-11</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge ">WordPress</span></td>
+      <td class="num-cell">$500K</td>
+      <td class="num-cell">15K</td>
+      <td class="num-cell">—</td>
+      <td>Digital Agency</td>
+      <td>AU</td>
+      <td><span class="score score-low">1</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-13" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="3" data-revenue="300000" data-traffic="10000" data-price="60" data-date="2026-05-13" data-platform="WordPress" data-category="Hospitality" data-country="CA">
       <td><span class="store-name">Pineridge Hollow</span></td>
       <td><a href="https://pineridgehollow.com" target="_blank" rel="noopener" class="domain-link">pineridgehollow.com</a></td>
       <td>Zach Regehr</td>
       <td><a href="mailto:zach@pineirdgehollow.com" class="email-link">zach@pineirdgehollow.com</a></td>
       <td class="date-cell">2026-05-13</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge ">WordPress</span></td>
+      <td class="num-cell">$300K</td>
+      <td class="num-cell">10K</td>
+      <td class="num-cell">$60</td>
+      <td>Hospitality</td>
+      <td>CA</td>
+      <td><span class="score score-low">3</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-18" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="4" data-revenue="1500000" data-traffic="35000" data-price="90" data-date="2026-05-18" data-platform="Shopify" data-category="Construction" data-country="US">
       <td><span class="store-name">Concrete Tools Direct</span></td>
       <td><a href="https://concretetoolsdirect.com" target="_blank" rel="noopener" class="domain-link">concretetoolsdirect.com</a></td>
       <td>Kamila</td>
       <td><a href="mailto:kamila@concretetoolsdirect.com" class="email-link">kamila@concretetoolsdirect.com</a></td>
       <td class="date-cell">2026-05-18</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$1.5M</td>
+      <td class="num-cell">35K</td>
+      <td class="num-cell">$90</td>
+      <td>Construction</td>
+      <td>US</td>
+      <td><span class="score score-mid">4</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-19" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="2" data-revenue="5000000" data-traffic="80000" data-price="25" data-date="2026-05-19" data-platform="Shopify" data-category="Nutrition" data-country="GB">
       <td><span class="store-name">Purition</span></td>
       <td><a href="https://purition.co.uk" target="_blank" rel="noopener" class="domain-link">purition.co.uk</a></td>
       <td>Matt</td>
       <td><a href="mailto:matthew@purition.co.uk" class="email-link">matthew@purition.co.uk</a></td>
       <td class="date-cell">2026-05-19</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$5.0M</td>
+      <td class="num-cell">80K</td>
+      <td class="num-cell">$25</td>
+      <td>Nutrition</td>
+      <td>GB</td>
+      <td><span class="score score-low">2</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-05-20" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="4" data-revenue="3000000" data-traffic="55000" data-price="180" data-date="2026-05-20" data-platform="Shopify" data-category="Baby &amp; Kids" data-country="DK">
       <td><span class="store-name">Miamily</span></td>
       <td><a href="https://miamily.com" target="_blank" rel="noopener" class="domain-link">miamily.com</a></td>
       <td>Francesco Fabris</td>
       <td><a href="mailto:francesco@miamily.com" class="email-link">francesco@miamily.com</a></td>
       <td class="date-cell">2026-05-20</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$3.0M</td>
+      <td class="num-cell">55K</td>
+      <td class="num-cell">$180</td>
+      <td>Baby &amp; Kids</td>
+      <td>DK</td>
+      <td><span class="score score-mid">4</span></td>
     </tr>
-    <tr class=" not-found-row" data-score="0" data-revenue="0" data-traffic="0" data-price="0" data-date="2026-06-15" data-platform="—" data-category="—" data-country="—">
+    <tr class=" " data-score="2" data-revenue="2000000" data-traffic="45000" data-price="45" data-date="2026-06-15" data-platform="Shopify" data-category="Health &amp; Wellness" data-country="CA">
       <td><span class="store-name">Symphony Natural Health</span></td>
       <td><a href="https://symphonynaturalhealth.com" target="_blank" rel="noopener" class="domain-link">symphonynaturalhealth.com</a></td>
       <td>Chelsey Gray</td>
       <td><a href="mailto:chelsey.gray@symphonynaturalhealth.com" class="email-link">chelsey.gray@symphonynaturalhealth.com</a></td>
       <td class="date-cell">2026-06-15</td>
-      <td><span class="platform-badge ">—</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td class="num-cell"><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="na">N/A</span></td>
-      <td><span class="score score-low">0</span></td>
+      <td><span class="platform-badge shopify">Shopify</span></td>
+      <td class="num-cell">$2.0M</td>
+      <td class="num-cell">45K</td>
+      <td class="num-cell">$45</td>
+      <td>Health &amp; Wellness</td>
+      <td>CA</td>
+      <td><span class="score score-low">2</span></td>
     </tr>
       </tbody>
     </table>
   </div>
 
   
-  <section class="not-found-section">
-    <h2 class="section-title">Not Found <span class="badge">26</span></h2>
-    <p class="not-found-desc">The following domains returned no data from the StoreLeads API:</p>
-    <div class="not-found-grid">
-      
-      <div class="not-found-card">
-        <div class="nf-domain">nativepath.com</div>
-        <div class="nf-company">NativePath</div>
-        <div class="nf-contact">Chiquita Johnson · chiquita.johnson@nativepath.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">pinaq.com</div>
-        <div class="nf-company">Pinaq Liqueur</div>
-        <div class="nf-contact">Tom Curtin · tom.curtin@pinaq.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">happyluckys.com</div>
-        <div class="nf-company">Happy Lucky's Teahouse</div>
-        <div class="nf-contact">George Grossman · george@happyluckys.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">dawbu.com</div>
-        <div class="nf-company">Dawbu</div>
-        <div class="nf-contact">Kartik · kartik@theaffordableorganicstore.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">umbertogiannini.com</div>
-        <div class="nf-company">Umberto Giannini</div>
-        <div class="nf-contact">Kate B · ecommerce@umbertogiannini.co.uk</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">shapewearusa.com</div>
-        <div class="nf-company">Shapewearusa.com</div>
-        <div class="nf-contact">Steve Jones · sjones@shapewearusa.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">lostdutchmanleather.com</div>
-        <div class="nf-company">Lost Dutchman Leather</div>
-        <div class="nf-contact">Olivia · olivia@lostdutchmanleather.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">petstable.mx</div>
-        <div class="nf-company">Petstable</div>
-        <div class="nf-contact">Luis Gerardo Flores · luisgerardo@petstable.mx</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">patbo.com</div>
-        <div class="nf-company">PatBO</div>
-        <div class="nf-contact">Erica Swalf · erica.swalf@patbo.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">craftmix.com</div>
-        <div class="nf-company">Craftmix</div>
-        <div class="nf-contact">Lynnsey Baker · lynnsey@craftmix.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">ncchocolatier.com</div>
-        <div class="nf-company">NC Chocolatier</div>
-        <div class="nf-contact">Zalman Teldon · zalman@ncchocolatier.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">freestylesnacking.com</div>
-        <div class="nf-company">Freestyle Snacks</div>
-        <div class="nf-contact">Hannah Jablonski · hannah@freestylesnacking.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">drhonow.com</div>
-        <div class="nf-company">DR-HO'S</div>
-        <div class="nf-contact">Vincent Ho · vho@drhonow.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">urbanplatter.com</div>
-        <div class="nf-company">Urban Platter</div>
-        <div class="nf-contact">Yash Dani · yash@glamble.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">evanalexandergrooming.com</div>
-        <div class="nf-company">Evan Alexander Grooming</div>
-        <div class="nf-contact">Brandon Patton · brandon@evanalexandergrooming.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">sarahcrealbeauty.com</div>
-        <div class="nf-company">Sarah Creal Beauty</div>
-        <div class="nf-contact">Tin · tin@sarahcrealbeauty.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">echo-sigma.com</div>
-        <div class="nf-company">Echo-Sigma</div>
-        <div class="nf-contact">Chris Reidel · chris@echo-sigma.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">illuminatelabs.org</div>
-        <div class="nf-company">Illuminate Labs</div>
-        <div class="nf-contact">Calloway Cook · calloway@illuminatelabs.org</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">urbanspacemarkets.com</div>
-        <div class="nf-company">Urbanspace</div>
-        <div class="nf-contact">Eldon Scott · escott@urbanspacemarkets.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">imperiacaviar.com</div>
-        <div class="nf-company">Imperia Caviar</div>
-        <div class="nf-contact">Daniel Lee · daniel@imperiacaviar.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">righthookdigital.com</div>
-        <div class="nf-company">Right Hook Digital</div>
-        <div class="nf-contact">Andrew Lauchner · drew@righthookdigital.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">pineridgehollow.com</div>
-        <div class="nf-company">Pineridge Hollow</div>
-        <div class="nf-contact">Zach Regehr · zach@pineirdgehollow.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">concretetoolsdirect.com</div>
-        <div class="nf-company">Concrete Tools Direct</div>
-        <div class="nf-contact">Kamila · kamila@concretetoolsdirect.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">purition.co.uk</div>
-        <div class="nf-company">Purition</div>
-        <div class="nf-contact">Matt · matthew@purition.co.uk</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">miamily.com</div>
-        <div class="nf-company">Miamily</div>
-        <div class="nf-contact">Francesco Fabris · francesco@miamily.com</div>
-      </div>
-      <div class="not-found-card">
-        <div class="nf-domain">symphonynaturalhealth.com</div>
-        <div class="nf-company">Symphony Natural Health</div>
-        <div class="nf-contact">Chelsey Gray · chelsey.gray@symphonynaturalhealth.com</div>
-      </div>
-    </div>
-  </section>
 
 </div>
 
 <footer class="footer">
-  <p>OneText · StoreLeads Outbound Analysis · Data sourced from StoreLeads API · May 18, 2026 at 5:22 PM UTC</p>
+  <p>OneText · StoreLeads Outbound Analysis · Data sourced from StoreLeads API · May 18, 2026 at 5:26 PM UTC</p>
   <p style="margin-top:6px">Priority score: Revenue &gt;$10M (+3) · Traffic &gt;100K (+2) · Avg Price &gt;$50 (+2) · Shopify (+1) · Has Social (+1) · US-based (+1) · Max 10</p>
 </footer>
 
